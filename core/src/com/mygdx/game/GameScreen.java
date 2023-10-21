@@ -17,6 +17,7 @@ public class GameScreen implements Screen {
 	private BitmapFont font;
 	private Tarro tarro;
 	private Lluvia lluvia;
+	private PowerUpManager powerUpManager;
 
 	   
 	//boolean activo = true;
@@ -47,6 +48,9 @@ public class GameScreen implements Screen {
 	      
 	      // creacion de la lluvia
 	      lluvia.crear();
+	      
+	      powerUpManager = new PowerUpManager();
+
 	}
 
 	@Override
@@ -75,11 +79,16 @@ public class GameScreen implements Screen {
 	    	  game.setScreen(new GameOverScreen(game));
 	    	  dispose();
 	       }
+
+	     
 		}
+	    powerUpManager.update(delta, tarro);
+	    powerUpManager.comprobarColisiones(tarro);
+	    powerUpManager.draw(batch);
+
 		
 		tarro.dibujar(batch);
 		lluvia.actualizarDibujoLluvia(batch);
-		
 		batch.end();
 	}
 

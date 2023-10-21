@@ -13,12 +13,13 @@ public class Tarro {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Sound sonidoHerido;
-	   private int vidas = 3;
+	   private int vidas = 30;
 	   private int puntos = 0;
 	   private int velx = 400;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
+	   private int defaultSpeed = 400;
 	   
 	   
 	   public Tarro(Texture tex, Sound ss) {
@@ -40,6 +41,21 @@ public class Tarro {
 			puntos+=pp;
 		}
 		
+	    public void setVidas(int vidas) {
+	        this.vidas = vidas;
+	    }
+	    
+	    public int getVelx() {
+	    	return velx;
+	    }
+	    
+	    public void setVelx (int velx) {
+	    	this.velx = velx;
+	    }
+	    
+	    public void resetSpeed() {
+	        velx = defaultSpeed;
+	    }
 	
 	   public void crear() {
 		      bucket = new Rectangle();
