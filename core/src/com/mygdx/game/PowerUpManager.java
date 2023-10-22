@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class PowerUpManager {
     private Array<PowerUp> powerUps;
     private float tiempoUltimoSpawn; // Controla la generación de power-ups
-    private float intervaloGeneracion = 5f; // Intervalo de generación
+    private float intervaloGeneracion = 1f; // Intervalo de generación
 
     public PowerUpManager() {
         powerUps = new Array<PowerUp>();
@@ -40,22 +40,40 @@ public class PowerUpManager {
 
 
     public void generarPowerUpAleatorio() {
-        int randomNumber = MathUtils.random(0, 1); // Número aleatorio entre 0 y 2 (o el número de tipos de power-ups que tengas)
+        int randomNumber = MathUtils.random(0, 1); // Número aleatorio entre 0 y 1
         int xInicial = MathUtils.random(0, 800 - 64); // Coordenada x aleatoria
         int yInicial = 480; // Coordenada y fija
         float anchoPowerUp = 64; // Ancho fijo
         float altoPowerUp = 64; // Alto fijo
+        Texture texture = new Texture(Gdx.files.internal("optimization.png"));
+        Texture texture2 = new Texture(Gdx.files.internal("hearts.png"));
 
-
-        switch (1) {
+        switch (randomNumber) {
             case 0:
-            	//power up 1
+            	powerUps.add(new SpeedPowerUp(
+            			texture, // Texture para la apariencia del power-up
+            		    2f, // Duración de 10 segundos
+            		    xInicial, // Coordenada x inicial aleatoria
+            		    yInicial, // Coordenada y fija
+            		    anchoPowerUp, // Ancho fijo
+            		    altoPowerUp, // Alto fijo
+            		    400f // Velocidad del power-up
+            		));
             	break;
             case 1:
-            // power up 2
+            	powerUps.add(new ExtraLifePowerUp(
+            			texture2, // Texture para la apariencia del power-up
+            		    10f, // Duración de 10 segundos
+            		    xInicial, // Coordenada x inicial aleatoria
+            		    yInicial, // Coordenada y fija
+            		    anchoPowerUp, // Ancho fijo
+            		    altoPowerUp, // Alto fijo
+            		    400f // Velocidad del power-up
+            		));
             	break;
         }
     }
+
 
 
     public void comprobarColisiones(Tarro tarro) {
@@ -74,4 +92,5 @@ public class PowerUpManager {
             powerUp.draw(batch);
         }
     }
+    
 }

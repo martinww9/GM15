@@ -80,10 +80,10 @@ public class GameScreen implements Screen {
 	    	  dispose();
 	       }
 
-	     
+		    powerUpManager.update(delta, tarro);
+		    powerUpManager.comprobarColisiones(tarro);
 		}
-	    powerUpManager.update(delta, tarro);
-	    powerUpManager.comprobarColisiones(tarro);
+
 	    powerUpManager.draw(batch);
 
 		
@@ -122,6 +122,7 @@ public class GameScreen implements Screen {
 	public void dispose() {
       tarro.destruir();
       lluvia.destruir();
+      //powerUpManager.destruir();
 
 	}
 
