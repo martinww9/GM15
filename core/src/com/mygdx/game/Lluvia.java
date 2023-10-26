@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Lluvia {
+public class Lluvia implements ElementoJuego {
 	private Array<Rectangle> rainDropsPos;
 	private Array<Integer> rainDropsType;
     private long lastDropTime;
@@ -18,12 +18,14 @@ public class Lluvia {
     private Texture gotaMala;
     private Sound dropSound;
     private Music rainMusic;
+    private boolean juegoTerminado;
 	   
 	public Lluvia(Texture gotaBuena, Texture gotaMala, Sound ss, Music mm) {
 		rainMusic = mm;
 		dropSound = ss;
 		this.gotaBuena = gotaBuena;
 		this.gotaMala = gotaMala;
+		juegoTerminado = false;
 	}
 	
 	public void crear() {
@@ -82,16 +84,9 @@ public class Lluvia {
 	  return true; 
    }
    
-   public void actualizarDibujoLluvia(SpriteBatch batch) { 
-	   
-	  for (int i=0; i < rainDropsPos.size; i++ ) {
-		  Rectangle raindrop = rainDropsPos.get(i);
-		  if(rainDropsType.get(i)==1) // gota dañina
-	         batch.draw(gotaMala, raindrop.x, raindrop.y); 
-		  else
-			 batch.draw(gotaBuena, raindrop.x, raindrop.y); 
-	   }
-   }
+
+   
+   @Override
    public void destruir() {
       dropSound.dispose();
       rainMusic.dispose();
@@ -102,5 +97,54 @@ public class Lluvia {
    public void continuar() {
 	  rainMusic.play();
    }
+
+	@Override
+	public void actualizar(Tarro tarro) {
+		   // generar gotas de lluvia 
+		   if(TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
+		  
+		   
+		   // revisar si las gotas cayeron al suelo o chocaron con el tarro
+		   for (int i=0; i < rainDropsPos.size; i++ ) {
+			  Rectangle raindrop = rainDropsPos.get(i);
+		      raindrop.y -= 300 * Gdx.graphics.getDeltaTime();
+		      //cae al suelo y se elimina
+		      if(raindrop.y + 64 < 0) {
+		    	  rainDropsPos.removeIndex(i); 
+		    	  rainDropsType.removeIndex(i);
+		      }
+		      if(raindrop.overlaps(tarro.getArea())) { //la gota choca con el tarro
+		    	if(rainDropsType.get(i)==1) { // gota dañina
+		    	  tarro.dañar();
+		    	  if (tarro.getVidas()<=0)
+		    		 juegoTerminado = true; // si se queda sin vidas retorna falso /game over
+		    	  rainDropsPos.removeIndex(i);
+		          rainDropsType.removeIndex(i);
+		      	}else { // gota a recolectar
+		    	  tarro.sumarPuntos(10);
+		          dropSound.play();
+		          rainDropsPos.removeIndex(i);
+		          rainDropsType.removeIndex(i);
+		      	}
+		      }
+		   } 
+		
+	}
+	
+    public boolean isJuegoTerminado() {
+        return juegoTerminado;
+    }
+
+@Override
+public void dibujar(SpriteBatch batch) {
+	  for (int i=0; i < rainDropsPos.size; i++ ) {
+		  Rectangle raindrop = rainDropsPos.get(i);
+		  if(rainDropsType.get(i)==1) // gota dañina
+	         batch.draw(gotaMala, raindrop.x, raindrop.y); 
+		  else
+			 batch.draw(gotaBuena, raindrop.x, raindrop.y); 
+	   }
+	
+}
    
 }

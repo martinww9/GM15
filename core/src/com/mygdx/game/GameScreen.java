@@ -53,6 +53,7 @@ public class GameScreen implements Screen {
 
 	}
 
+	
 	@Override
 	public void render(float delta) {
 		//limpia la pantalla con color azul obscuro.
@@ -69,15 +70,18 @@ public class GameScreen implements Screen {
 		
 		if (!tarro.estaHerido()) {
 			// movimiento del tarro desde teclado
-	        tarro.actualizarMovimiento();        
+	        tarro.actualizar(tarro);        
 			// caida de la lluvia 
-	       if (!lluvia.actualizarMovimiento(tarro)) {
+	        
+	       if (lluvia.isJuegoTerminado()) {
 	    	  //actualizar HigherScore
 	    	  if (game.getHigherScore()<tarro.getPuntos())
 	    		  game.setHigherScore(tarro.getPuntos());  
 	    	  //ir a la ventana de finde juego y destruir la actual
 	    	  game.setScreen(new GameOverScreen(game));
 	    	  dispose();
+	       } else {
+	    	   lluvia.actualizar(tarro);
 	       }
 
 		    powerUpManager.update(delta, tarro);
@@ -88,10 +92,10 @@ public class GameScreen implements Screen {
 
 		
 		tarro.dibujar(batch);
-		lluvia.actualizarDibujoLluvia(batch);
+		lluvia.dibujar(batch);
 		batch.end();
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
 	}
@@ -125,5 +129,6 @@ public class GameScreen implements Screen {
       //powerUpManager.destruir();
 
 	}
-
 }
+
+

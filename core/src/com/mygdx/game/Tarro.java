@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class Tarro {
+public class Tarro implements ElementoJuego {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Sound sonidoHerido;
@@ -70,19 +70,15 @@ public class Tarro {
 		  tiempoHerido=tiempoHeridoMax;
 		  sonidoHerido.play();
 	   }
-	   public void dibujar(SpriteBatch batch) {
-		 if (!herido)  
-		   batch.draw(bucketImage, bucket.x, bucket.y);
-		 else {
-		
-		   batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
-		   tiempoHerido--;
-		   if (tiempoHerido<=0) herido = false;
-		 }
-	   } 
-	   
-	   
-	   public void actualizarMovimiento() { 
+ 	   
+	    
+	
+   public boolean estaHerido() {
+	   return herido;
+   }
+
+	@Override
+	public void actualizar(Tarro tarro) {
 		   // movimiento desde mouse/touch
 		   /*if(Gdx.input.isTouched()) {
 			      Vector3 touchPos = new Vector3();
@@ -96,15 +92,24 @@ public class Tarro {
 		   // que no se salga de los bordes izq y der
 		   if(bucket.x < 0) bucket.x = 0;
 		   if(bucket.x > 800 - 64) bucket.x = 800 - 64;
-	   }
-	    
-
+		
+	}
+	
+	@Override
+	public void dibujar (SpriteBatch batch) {
+		 if (!herido)  
+			   batch.draw(bucketImage, bucket.x, bucket.y);
+			 else {
+			
+			   batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
+			   tiempoHerido--;
+			   if (tiempoHerido<=0) herido = false;
+			 }
+	}
+	
+	@Override
 	public void destruir() {
 		    bucketImage.dispose();
 	   }
 	
-   public boolean estaHerido() {
-	   return herido;
-   }
-	   
 }
