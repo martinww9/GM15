@@ -18,6 +18,7 @@ public class GameScreen implements Screen {
 	private Tarro tarro;
 	private Lluvia lluvia;
 	private PowerUpManager powerUpManager;
+	private LevelManager levelManager;
 
 	   
 	//boolean activo = true;
@@ -28,11 +29,11 @@ public class GameScreen implements Screen {
         this.font = game.getFont();
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
 		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
+		  tarro = new Tarro(new Texture(Gdx.files.internal("pirata79.png")),hurtSound);
          
 	      // load the drop sound effect and the rain background "music" 
-         Texture gota = new Texture(Gdx.files.internal("drop.png"));
-         Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+         Texture gota = new Texture(Gdx.files.internal("Tesoro.png"));
+         Texture gotaMala = new Texture(Gdx.files.internal("Bomba.png"));
          
          Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         
@@ -50,7 +51,11 @@ public class GameScreen implements Screen {
 	      lluvia.crear();
 	      
 	      powerUpManager = new PowerUpManager();
-
+	      Music levelBGM = Gdx.audio.newMusic(Gdx.files.internal("Level1BGM.wav"));
+	      levelManager = new LevelManager(levelBGM);
+	      
+	      
+	      
 	}
 
 	
@@ -58,15 +63,21 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		//limpia la pantalla con color azul obscuro.
 		ScreenUtils.clear(0, 0, 0.2f, 1);
+		//actualizar nivel dependiendo del puntaje
 		//actualizar matrices de la cámara
 		camera.update();
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		levelManager.actualizar(delta, tarro, batch);
+		
+
+		
+		
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
 		font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
-		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 475);
+		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 475);	
 		
 		if (!tarro.estaHerido()) {
 			// movimiento del tarro desde teclado
@@ -86,11 +97,10 @@ public class GameScreen implements Screen {
 
 		    powerUpManager.update(delta, tarro);
 		    powerUpManager.comprobarColisiones(tarro);
+		    
 		}
 
 	    powerUpManager.draw(batch);
-
-		
 		tarro.dibujar(batch);
 		lluvia.dibujar(batch);
 		batch.end();
@@ -104,6 +114,7 @@ public class GameScreen implements Screen {
 	public void show() {
 	  // continuar con sonido de lluvia
 	  lluvia.continuar();
+	  levelManager.resume();
 	}
 
 	@Override
@@ -114,6 +125,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void pause() {
 		lluvia.pausar();
+		levelManager.pausar();
 		game.setScreen(new PausaScreen(game, this)); 
 	}
 
@@ -126,7 +138,8 @@ public class GameScreen implements Screen {
 	public void dispose() {
       tarro.destruir();
       lluvia.destruir();
-      //powerUpManager.destruir();
+      powerUpManager.destruir();
+     // levelManager.destruir();
 
 	}
 }

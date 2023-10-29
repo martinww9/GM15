@@ -45,5 +45,9 @@ public abstract class PowerUp {
     public Rectangle getBounds() {
         return bounds;
     }
+    
+    public void destruir() {
+    	texture.dispose();
+    }
 }
 

@@ -59,10 +59,10 @@ public class Tarro implements ElementoJuego {
 	
 	   public void crear() {
 		      bucket = new Rectangle();
-		      bucket.x = 800 / 2 - 64 / 2;
+		      bucket.x = 800 / 2 - 79 / 2;
 		      bucket.y = 20;
-		      bucket.width = 64;
-		      bucket.height = 64;
+		      bucket.width = 79;
+		      bucket.height = 79;
 	   }
 	   public void dañar() {
 		  vidas--;
@@ -91,7 +91,7 @@ public class Tarro implements ElementoJuego {
 		   if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += velx * Gdx.graphics.getDeltaTime();
 		   // que no se salga de los bordes izq y der
 		   if(bucket.x < 0) bucket.x = 0;
-		   if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+		   if(bucket.x > 800 - 79) bucket.x = 800 - 79;
 		
 	}
 	

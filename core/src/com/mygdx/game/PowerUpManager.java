@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class PowerUpManager {
     private Array<PowerUp> powerUps;
     private float tiempoUltimoSpawn; // Controla la generación de power-ups
-    private float intervaloGeneracion = 1f; // Intervalo de generación
+    private float intervaloGeneracion = 3f; // Intervalo de generación
 
     public PowerUpManager() {
         powerUps = new Array<PowerUp>();
@@ -45,8 +45,8 @@ public class PowerUpManager {
         int yInicial = 480; // Coordenada y fija
         float anchoPowerUp = 64; // Ancho fijo
         float altoPowerUp = 64; // Alto fijo
-        Texture texture = new Texture(Gdx.files.internal("optimization.png"));
-        Texture texture2 = new Texture(Gdx.files.internal("hearts.png"));
+        Texture texture = new Texture(Gdx.files.internal("rumboost.png"));
+        Texture texture2 = new Texture(Gdx.files.internal("heart.png"));
 
         switch (randomNumber) {
             case 0:
@@ -90,6 +90,12 @@ public class PowerUpManager {
         // Dibuja los power-ups en la pantalla
         for (PowerUp powerUp : powerUps) {
             powerUp.draw(batch);
+        }
+    }
+    
+    public void destruir () {
+        for (PowerUp powerUp : powerUps) {
+            powerUp.destruir();	
         }
     }
     

@@ -11,7 +11,7 @@ public class SpeedPowerUp extends PowerUp {
     public void applyEffect(Tarro tarro) {
     	tarro.resetSpeed();
         // Implementa el efecto del power-up de velocidad directamente
-        tarro.setVelx(tarro.getVelx() * 5); // Por ejemplo, duplicar la velocidad del tarro
+        tarro.setVelx(tarro.getVelx() * 2); // Por ejemplo, duplicar la velocidad del tarro
     }
 
 	@Override
