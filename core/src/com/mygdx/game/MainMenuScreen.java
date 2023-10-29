@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -31,9 +33,11 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
+		Texture fondoActual = new Texture(Gdx.files.internal("MainMenuRotated.jpg"));
+		batch.draw(fondoActual,0,0, 800, 500, 1.0f, 1.0f, 0, 0);
 		font.getData().setScale(2, 2);
-		font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, camera.viewportHeight/2+50);
-		font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, camera.viewportHeight/2-50);
+		//font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, camera.viewportHeight/2+50);
+		//font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, camera.viewportHeight/2-50);
 
 		batch.end();
 

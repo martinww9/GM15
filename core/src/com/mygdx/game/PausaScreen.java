@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -33,8 +35,8 @@ public class PausaScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		font.draw(batch, "Juego en Pausa ", 100, 150);
-		font.draw(batch, "Toca en cualquier lado para continuar !!!", 100, 100);
+		Texture fondoActual = new Texture(Gdx.files.internal("PauseScreenRotated.jpg"));
+		batch.draw(fondoActual,0,0, 800, 500, 1.0f, 1.0f, 0, 0);
 		batch.end();
 
 		if (Gdx.input.isTouched()) {

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,10 +39,8 @@ public class LevelManager {
         // Obtener el nivel actual
         Level nivelActual = obtenerNivelActual();
 
-        // Actualizar la música y el fondo del nivel
-        //Music musicaActual = nivelActual.obtenerMusica();
+        // Actualizael fondo del nivel
         Texture fondoActual = nivelActual.obtenerFondo();
-        //nivelActual.obtenerFondo();
         batch.draw(fondoActual,0,0, 800, 500, 1.0f, 1.0f, 0, 0);
             
     }

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -13,7 +14,7 @@ public class Tarro implements ElementoJuego {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Sound sonidoHerido;
-	   private int vidas = 30;
+	   private int vidas = 1;
 	   private int puntos = 0;
 	   private int velx = 400;
 	   private boolean herido = false;

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -63,12 +64,12 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		//limpia la pantalla con color azul obscuro.
 		ScreenUtils.clear(0, 0, 0.2f, 1);
-		//actualizar nivel dependiendo del puntaje
 		//actualizar matrices de la cámara
 		camera.update();
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		//actualizar nivel dependiendo del puntaje
 		levelManager.actualizar(delta, tarro, batch);
 		
 
@@ -90,11 +91,12 @@ public class GameScreen implements Screen {
 	    		  game.setHigherScore(tarro.getPuntos());  
 	    	  //ir a la ventana de finde juego y destruir la actual
 	    	  game.setScreen(new GameOverScreen(game));
+	    	  levelManager.pausar();
 	    	  dispose();
 	       } else {
 	    	   lluvia.actualizar(tarro);
 	       }
-
+	       //caida de powerups
 		    powerUpManager.update(delta, tarro);
 		    powerUpManager.comprobarColisiones(tarro);
 		    
@@ -112,7 +114,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-	  // continuar con sonido de lluvia
+	  // continuar con sonido de lluvia y bgm
 	  lluvia.continuar();
 	  levelManager.resume();
 	}
@@ -139,7 +141,6 @@ public class GameScreen implements Screen {
       tarro.destruir();
       lluvia.destruir();
       powerUpManager.destruir();
-     // levelManager.destruir();
 
 	}
 }
