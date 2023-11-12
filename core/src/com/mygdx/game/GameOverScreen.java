@@ -12,13 +12,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class GameOverScreen implements Screen {
 	private final GameLluviaMenu game;
 	private SpriteBatch batch;	   
-	private BitmapFont font;
 	private OrthographicCamera camera;
 
 	public GameOverScreen(final GameLluviaMenu game) {
 		this.game = game;
         this.batch = game.getBatch();
-        this.font = game.getFont();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 	}

@@ -33,13 +33,13 @@ public class GameScreen implements Screen {
 		  tarro = new Tarro(new Texture(Gdx.files.internal("pirata79.png")),hurtSound);
          
 	      // load the drop sound effect and the rain background "music" 
-         Texture gota = new Texture(Gdx.files.internal("Tesoro.png"));
-         Texture gotaMala = new Texture(Gdx.files.internal("Bomba.png"));
+         //Texture gota = new Texture(Gdx.files.internal("Tesoro.png"));
+         //Texture gotaMala = new Texture(Gdx.files.internal("Bomba.png"));
          
          Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         
 	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
+         lluvia = new Lluvia(dropSound, rainMusic);
 	      
 	      // camera
 	      camera = new OrthographicCamera();
@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
 		
 		if (!tarro.estaHerido()) {
 			// movimiento del tarro desde teclado
-	        tarro.actualizar(tarro);        
+	        tarro.actualizar(tarro, batch);        
 			// caida de la lluvia 
 	        
 	       if (lluvia.isJuegoTerminado()) {
@@ -94,7 +94,7 @@ public class GameScreen implements Screen {
 	    	  levelManager.pausar();
 	    	  dispose();
 	       } else {
-	    	   lluvia.actualizar(tarro);
+	    	   lluvia.actualizar(tarro, batch);
 	       }
 	       //caida de powerups
 		    powerUpManager.update(delta, tarro);
