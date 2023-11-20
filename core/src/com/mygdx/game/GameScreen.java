@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -25,6 +26,7 @@ public class GameScreen implements Screen {
 	//boolean activo = true;
 
 	public GameScreen(final GameLluviaMenu game) {
+		
 		this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
@@ -56,7 +58,6 @@ public class GameScreen implements Screen {
 	      levelManager = new LevelManager(levelBGM);
 	      
 	      
-	      
 	}
 
 	
@@ -70,7 +71,7 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//actualizar nivel dependiendo del puntaje
-		levelManager.actualizar(delta, tarro, batch);
+		levelManager.actualizar(delta, tarro, batch, lluvia);
 		
 
 		
@@ -89,6 +90,11 @@ public class GameScreen implements Screen {
 	    	  //actualizar HigherScore
 	    	  if (game.getHigherScore()<tarro.getPuntos())
 	    		  game.setHigherScore(tarro.getPuntos());  
+	    	  
+	    	  HighScore nuevoHighScore = new HighScore(null, tarro.getPuntos());
+	    	  CsvDataManager.getInstance().getHighScores().add(nuevoHighScore);
+	    	  CsvDataManager.getInstance().guardarHighScoresEnCsv();
+	    	  
 	    	  //ir a la ventana de finde juego y destruir la actual
 	    	  game.setScreen(new GameOverScreen(game));
 	    	  levelManager.pausar();
@@ -101,9 +107,8 @@ public class GameScreen implements Screen {
 		    powerUpManager.comprobarColisiones(tarro);
 		    
 		}
-
-	    powerUpManager.draw(batch);
 		tarro.dibujar(batch);
+	    powerUpManager.draw(batch);
 		lluvia.dibujar(batch);
 		batch.end();
 	}
@@ -117,7 +122,9 @@ public class GameScreen implements Screen {
 	  // continuar con sonido de lluvia y bgm
 	  lluvia.continuar();
 	  levelManager.resume();
+
 	}
+		
 
 	@Override
 	public void hide() {
@@ -136,13 +143,14 @@ public class GameScreen implements Screen {
 
 	}
 
-	@Override
-	public void dispose() {
-      tarro.destruir();
-      lluvia.destruir();
-      powerUpManager.destruir();
-
-	}
+    @Override
+    public void dispose() {
+        tarro.destruir();
+        lluvia.destruir();
+        powerUpManager.destruir();
+        // Guardar high scores antes de salir
+        CsvDataManager.getInstance().guardarHighScoresEnCsv();
+    }
 }
 
 
