@@ -12,6 +12,8 @@ public abstract class Gota {
     private float height;
     private Texture textura;
     private Rectangle area; // Representa el área rectangular de la gota
+    private boolean moverZigZag;
+
 
     public Gota(float x, float y, int tipo, float width, float height, Texture textura) {
         this.x = x;
@@ -21,20 +23,36 @@ public abstract class Gota {
         this.height = height;
         this.textura = textura;
         this.area = new Rectangle(x, y, width, height);
+        moverZigZag = false; // Inicialmente, la caída es normal
+
         
     }
 
     // Método Template Method que define el algoritmo general
-    public final void caer(Tarro tarro, SpriteBatch batch) {
-        mover();
+    public final void caer(Tarro tarro, SpriteBatch batch, boolean zigZag) {
+    	moverZigZag = zigZag;
+    	 if (moverZigZag) {
+             moverZigZag();
+         } else {
+        	 mover();
+         }
+    	
         actualizarEfectos(tarro);
         dibujar(batch);
     }
+    
+    public void alternarCaida() {
+        moverZigZag = !moverZigZag; // Alternar entre caída normal y zigzag
+    }
+    
+
+    
 
     // Métodos abstractos que deben ser implementados por las subclases
-    protected abstract void mover();
-    protected abstract void actualizarEfectos(Tarro tarro);
-    protected abstract void dibujar(SpriteBatch batch);
+    public abstract void moverZigZag( );
+    public abstract void mover();
+    public abstract void actualizarEfectos(Tarro tarro);
+    public abstract void dibujar(SpriteBatch batch);
 
     // Métodos comunes a todas las gotas
     public float getX() {

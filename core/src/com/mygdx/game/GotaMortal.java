@@ -5,23 +5,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-public class GotaMala extends Gota {
+public class GotaMortal extends Gota {
 	private float tiempoZigZag;
 	private float velocidadX;
 	private float velocidadY;
-	private static Texture texturaMala;  // Variable de clase para almacenar la textura
-    public GotaMala(float x, float y, int tipo, float width, float height, Texture texture) {
-        super(x, y, tipo, width, height, texture); // Tipo 2 para gota buena
+	private static Texture texturaMortal;  // Variable de clase para almacenar la textura
+    public GotaMortal(float x, float y, int tipo, float width, float height, Texture texture) {
+        super(x, y, tipo, width, height, texture); // Tipo 3 para gota mortal
         tiempoZigZag = 0; // Inicializar el tiempo de zigzag
         velocidadX = 400;
-        velocidadY = 400;
-        texturaMala = new Texture(Gdx.files.internal("Bomba.png"));
+        velocidadY = 200;
+        texturaMortal = new Texture(Gdx.files.internal("Mortal.png"));
+        
     }
 
     @Override
     public void mover() {
         // Velocidad a la que la gota buena se desplaza hacia abajo
-        float velocidadY = -400; // Ajusta la velocidad según tus necesidades
+        float velocidadY = -600; // Ajusta la velocidad según tus necesidades
 
         // Calcular la nueva posición en el eje Y
         float newY = getY() + velocidadY * Gdx.graphics.getDeltaTime();
@@ -33,7 +34,7 @@ public class GotaMala extends Gota {
     @Override
     public void moverZigZag() {
         // Calcular nueva posición en el eje X usando una función sinusoidal para el zigzag
-        float newX = getX() + velocidadX * Gdx.graphics.getDeltaTime() * MathUtils.sin(tiempoZigZag);
+        float newX = getX() + velocidadX * Gdx.graphics.getDeltaTime() * MathUtils.atan(tiempoZigZag);
         
         // Calcular nueva posición en el eje Y
         float newY = getY() - velocidadY * Gdx.graphics.getDeltaTime();
@@ -55,20 +56,22 @@ public class GotaMala extends Gota {
         setX(newX);
         setY(newY);
     }
+    
+    
 
 
     @Override
     public void actualizarEfectos(Tarro tarro) {
         // Verificar overlap con el tarro
         if (getArea().overlaps(tarro.getArea())) {
-            // Restar 1 vida al tarro
-            tarro.dañar();
+            // Añadir 10 puntos al tarro
+            tarro.setVidas(tarro.getVidas()*0);
         }
     }
 
 	@Override
 	public void dibujar(SpriteBatch batch) {
-		batch.draw(texturaMala, getX(), getY());
+		batch.draw(texturaMortal , getX(), getY());
 		
 	}
 

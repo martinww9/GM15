@@ -14,7 +14,7 @@ public class Tarro implements ElementoJuego {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Sound sonidoHerido;
-	   private int vidas = 1;
+	   private int vidas = 2;
 	   private int puntos = 0;
 	   private int velx = 400;
 	   private boolean herido = false;
@@ -81,8 +81,8 @@ public class Tarro implements ElementoJuego {
 	@Override
 	public void actualizar(Tarro tarro, SpriteBatch batch) {
 		   //movimiento desde teclado
-		   if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= velx * Gdx.graphics.getDeltaTime();
-		   if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += velx * Gdx.graphics.getDeltaTime();
+		   if(Gdx.input.isKeyPressed(Input.Keys.A)) bucket.x -= velx * Gdx.graphics.getDeltaTime();
+		   if(Gdx.input.isKeyPressed(Input.Keys.D)) bucket.x += velx * Gdx.graphics.getDeltaTime();
 		   // que no se salga de los bordes izq y der
 		   if(bucket.x < 0) bucket.x = 0;
 		   if(bucket.x > 800 - 79) bucket.x = 800 - 79;
@@ -94,7 +94,6 @@ public class Tarro implements ElementoJuego {
 		 if (!herido)  
 			   batch.draw(bucketImage, bucket.x, bucket.y);
 			 else {
-			
 			   batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
 			   tiempoHerido--;
 			   if (tiempoHerido<=0) herido = false;
