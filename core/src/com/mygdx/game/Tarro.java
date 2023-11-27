@@ -11,41 +11,78 @@ import com.badlogic.gdx.math.Rectangle;
 
 
 public class Tarro implements ElementoJuego {
-	   private Rectangle bucket;
-	   private Texture bucketImage;
-	   private Sound sonidoHerido;
-	   private int vidas = 2;
+
+	   
 	   private int puntos = 0;
-	   private int velx = 400;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
-	   private int defaultSpeed = 400;
+	   private int defaultSpeed;
 	   
+	   private Sound sonidoHerido;
+	   private Rectangle bucket;
+	   private Texture bucketImage;
+	   private int vidas;
+	   private int velx;
+	   private int vely;
+	   private TipoTarro tipoTarro;
+	   private boolean movimientoLibre;
 	   
-	   public Tarro(Texture tex, Sound ss) {
-		   bucketImage = tex;
-		   sonidoHerido = ss;
-	   }
+		public Tarro(Sound sonidoHerido, Rectangle bucket, Texture bucketImage, int vidas, int velx, int vely,
+			TipoTarro tipoTarro, boolean movimientoLibre) {
+			   this.bucketImage = bucketImage;
+			   this.sonidoHerido = sonidoHerido;
+			   this.vidas = vidas;
+			   this.tipoTarro = tipoTarro;
+			   this.bucket = bucket;
+			   this.velx = velx;
+			   this.vely = vely;
+			   defaultSpeed = velx;
+	}
+
+		public TipoTarro getTipoTarro() {
+		return tipoTarro;
+		}
+
+		public void setTipoTarro(TipoTarro tipoTarro) {
+			this.tipoTarro = tipoTarro;
+		}
+	
+	
+		public boolean isMovimientoLibre() {
+			return movimientoLibre;
+		}
+	
+	
+		public void setMovimientoLibre(boolean movimientoLibre) {
+			this.movimientoLibre = movimientoLibre;
+		}
+
+
+		public void setVidas(int vidas) {
+	        this.vidas = vidas;
+	    }
 	   
 		public int getVidas() {
 			return vidas;
+		}
+		
+		public Rectangle getArea() {
+			return bucket;
+		}
+		
+		public void setArea(Rectangle bucket) {
+			this.bucket = bucket;
 		}
 	
 		public int getPuntos() {
 			return puntos;
 		}
-		public Rectangle getArea() {
-			return bucket;
-		}
+
 		public void sumarPuntos(int pp) {
 			puntos+=pp;
 		}
 		
-	    public void setVidas(int vidas) {
-	        this.vidas = vidas;
-	    }
-	    
 	    public int getVelx() {
 	    	return velx;
 	    }
@@ -54,17 +91,18 @@ public class Tarro implements ElementoJuego {
 	    	this.velx = velx;
 	    }
 	    
+	    public int getVely() {
+		return vely;
+	    }
+
+		public void setVely(int vely) {
+			this.vely = vely;
+		}
+	    
 	    public void resetSpeed() {
 	        velx = defaultSpeed;
 	    }
-	
-	   public void crear() {
-		      bucket = new Rectangle();
-		      bucket.x = 800 / 2 - 79 / 2;
-		      bucket.y = 20;
-		      bucket.width = 79;
-		      bucket.height = 79;
-	   }
+	   
 	   public void dañar() {
 		  vidas--;
 		  herido = true;
@@ -83,9 +121,14 @@ public class Tarro implements ElementoJuego {
 		   //movimiento desde teclado
 		   if(Gdx.input.isKeyPressed(Input.Keys.A)) bucket.x -= velx * Gdx.graphics.getDeltaTime();
 		   if(Gdx.input.isKeyPressed(Input.Keys.D)) bucket.x += velx * Gdx.graphics.getDeltaTime();
+		   if(Gdx.input.isKeyPressed(Input.Keys.S)) bucket.y -= vely * Gdx.graphics.getDeltaTime();
+		   if(Gdx.input.isKeyPressed(Input.Keys.W)) bucket.y += vely * Gdx.graphics.getDeltaTime();
 		   // que no se salga de los bordes izq y der
 		   if(bucket.x < 0) bucket.x = 0;
 		   if(bucket.x > 800 - 79) bucket.x = 800 - 79;
+		   
+		   if(bucket.y < 0) bucket.y = 0;
+		   if(bucket.y > 500 - 79) bucket.y = 500 - 79;
 		
 	}
 	

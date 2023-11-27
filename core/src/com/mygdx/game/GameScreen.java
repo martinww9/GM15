@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
@@ -31,8 +32,10 @@ public class GameScreen implements Screen {
         this.batch = game.getBatch();
         this.font = game.getFont();
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
-		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  tarro = new Tarro(new Texture(Gdx.files.internal("pirata79.png")),hurtSound);
+		  //Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+		  //tarro = new Tarro(new Texture(Gdx.files.internal("pirata79.png")),hurtSound);
+        
+
          
 	      // load the drop sound effect and the rain background "music" 
          //Texture gota = new Texture(Gdx.files.internal("Tesoro.png"));
@@ -48,7 +51,26 @@ public class GameScreen implements Screen {
 	      camera.setToOrtho(false, 800, 480);
 	      batch = new SpriteBatch();
 	      // creacion del tarro
-	      tarro.crear();
+	      //tarro.crear();
+	      	TarroDirector director = new TarroDirector();
+	      	TarroBuilder builder = new TarroBuilder();
+	      	int randomNumber = MathUtils.random(0, 2);
+	      	
+	      	switch (randomNumber) {
+            case 0:
+            	director.createDefaultTarro(builder);
+            	break;
+            case 1:
+            	director.createTankTarro(builder);
+            	break;
+            case 2:
+            	director.createPlaneTarro(builder);
+            	break;
+        }
+	      	
+	      	
+	      	
+	      	 tarro = builder.getTarro();
 	      
 	      // creacion de la lluvia
 	      lluvia.crear();
