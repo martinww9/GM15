@@ -1,7 +1,9 @@
-package com.mygdx.game;
+	package com.mygdx.game;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CsvDataManager {
@@ -38,6 +40,13 @@ public class CsvDataManager {
             e.printStackTrace();
             // Manejar la excepción apropiadamente en tu aplicación
         }
+        
+        Collections.sort(highScores, new Comparator<HighScore>() {
+            @Override
+            public int compare(HighScore hs1, HighScore hs2) {
+                return Integer.compare(hs2.getScore(), hs1.getScore());
+            }
+        });
 
         return highScores;
     }

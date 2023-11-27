@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,8 +42,12 @@ public class MainMenuScreen implements Screen {
 
 		batch.end();
 
-		if (Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
+        if (Gdx.input.isTouched()) {
+            game.setScreen(new GameOverScreen(game)); // Cambiar a la pantalla de menú principal al tocar
+            dispose();
+        }
+		if (Gdx.input.isKeyJustPressed(Input.Keys.H)){
+			game.setScreen(new HighScoreScreen(game));
 			dispose();
 		}
 	}
