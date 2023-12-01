@@ -38,7 +38,6 @@ public class CsvDataManager {
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
-            // Manejar la excepción apropiadamente en tu aplicación
         }
         
         Collections.sort(highScores, new Comparator<HighScore>() {
@@ -58,7 +57,7 @@ public class CsvDataManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            // Manejar la excepción apropiadamente en tu aplicación
+
         }
     }
 }

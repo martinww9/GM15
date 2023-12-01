@@ -42,21 +42,6 @@ public class Lluvia implements ElementoJuego {
         rainMusic.play();
     }
 	
-	/* private void crearGotaDeLluvia() {
-	      Rectangle raindrop = new Rectangle();
-	      raindrop.x = MathUtils.random(0, 800-64);
-	      raindrop.y = 480;
-	      raindrop.width = 64;
-	      raindrop.height = 64;
-	      rainDropsPos.add(raindrop);
-	      // ver el tipo de gota
-	      if (MathUtils.random(1,10)<7)	    	  
-	         rainDropsType.add(1);
-	      else 
-	    	 rainDropsType.add(2);
-	      lastDropTime = TimeUtils.nanoTime();
-	   }	
-	*/
 
     private void crearGotaDeLluvia() {
     	Gota gota;
@@ -84,7 +69,6 @@ public class Lluvia implements ElementoJuego {
         gota.setY(480);
         
         // Otra configuración específica de Gota, si es necesaria
-        // gota.setOtraPropiedad(/* valor */);
 
         // Agregar la gota al array
         gotas.add(gota);

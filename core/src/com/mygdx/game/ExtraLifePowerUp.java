@@ -19,6 +19,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 	@Override
 	public void revertEffect(Tarro tarro) {
-		// No debemos restar vida, asi que no se hace nada.	
+		tarro.setVidas(tarro.getVidas());
 	}
 }
